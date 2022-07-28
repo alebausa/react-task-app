@@ -2,23 +2,37 @@ import './App.css';
 import React, { useState } from 'react';
 import taskData from './tasks.json';
 import TaskCard from './components/TaskCard';
+import SearchBar from './components/SearchBar';
 
 function App() {
-  const [tasks, setTasks] = useState(taskData);
+  const [pendingTasks, setPendingTasks] = useState(taskData);
+  const [filteredTasks, setFilteredTasks] = useState(taskData);
 
-  const handleDone = (id) => {
-    const filtered = tasks.filter(elem => elem._id !== id)
-    setTasks(filtered);
+  const handleDelete = (id) => {
+    const updatedList = pendingTasks.filter(elem => elem._id !== id);
+    setPendingTasks(updatedList);
+    setFilteredTasks(updatedList);
+  }
+
+  const handleSearch = (searchValue) => {
+    if (searchValue === '') {
+      setFilteredTasks(pendingTasks)
+    } else {
+      const filtered = pendingTasks.filter(elem => elem.title.toLowerCase().includes((searchValue).toLowerCase()));
+      setFilteredTasks(filtered)
+    }
   }
 
   return (
     <div className="App">
-      <h1>Task list</h1>
-      {tasks.map(elem => {
-        return <TaskCard task={elem} key={elem._id} onDelete={handleDone} />
+      <h1>To-do list</h1>
+      <SearchBar onSearch={handleSearch} />
+      {filteredTasks.map(elem => {
+        return <TaskCard key={elem._id} task={elem} onDelete={handleDelete} />
       })}
     </div>
-  );
+  )
+
 }
 
 export default App;

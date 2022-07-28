@@ -1,18 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 export default function TaskCard(props) {
-  const { task: { title, done, _id}, onDelete } = props;
-  const [isDone, setDone] = useState(done);
-  
-  const handleDone = () => {
-    setDone(prev => !prev);
-    onDelete(_id);
-  }
+  const { task: { title, _id }, onDelete } = props;
 
   return (
      <div className="task">
-          <p>{title}</p>
-          <p>{!isDone && <button onClick={handleDone}>Done</button>}</p>
-    </div>
+       <div>{title}</div>
+        <button className="btn" onClick={() => onDelete(_id)}>🗑</button>
+     </div>
   )
 }

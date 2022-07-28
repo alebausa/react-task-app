@@ -5,4 +5,11 @@ body {
 div.task {
   display: flex;
   gap: 20px;
+  align-items: center;
+}
+
+.btn {
+  height: 30px;
+  border-radius: 100%;
+  border: none;
 }
